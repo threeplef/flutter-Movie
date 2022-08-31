@@ -6,11 +6,15 @@ import 'package:movie/data/source/movie_api_impl.dart';
 class MovieMainViewModel extends ChangeNotifier {
   final _movieRepository = MovieRepositoryImpl(MovieApiImpl());
   List<Movie> movieList = [];
-  List<Movie> sortedMovieList = [];
+  List<Movie> sortedMovieListByTitle = [];
+  List<Movie> sortedMovieListByVoteAverage = [];
+  List<Movie> sortedMovieByReleaseDate = [];
 
   MovieMainViewModel() {
+    getList();
     getSortedListByTitle();
     getSortedListByVoteAverage();
+    getSortedListByReleaseDate();
     notifyListeners();
   }
 
@@ -25,12 +29,17 @@ class MovieMainViewModel extends ChangeNotifier {
   }
 
   Future getSortedListByTitle() async {
-    movieList = await _movieRepository.getSortedResultByTitle();
+    sortedMovieListByTitle = await _movieRepository.getSortedResultByTitle();
     notifyListeners();
   }
 
   Future getSortedListByVoteAverage() async {
-    sortedMovieList = await _movieRepository.getSortedResultByVoteAverage();
+    sortedMovieListByVoteAverage = await _movieRepository.getSortedResultByVoteAverage();
+    notifyListeners();
+  }
+
+  Future getSortedListByReleaseDate() async {
+    sortedMovieByReleaseDate = await _movieRepository.getSortedResultByReleaseDate();
     notifyListeners();
   }
 }
