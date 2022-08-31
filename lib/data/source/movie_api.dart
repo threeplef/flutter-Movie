@@ -1,8 +1,6 @@
-import 'package:movie/data/model/movie.dart';
+import 'package:movie/data/model/movie_dto.dart';
 
 abstract class MovieApi {
-  Future<List<Movie>> getMovieList();
-  Future<List<Movie>> getSearchMovieList(String query);
-  Future<List<Movie>> getSortedMovieByTitle();
-  Future<List<Movie>> getSortedMovieByVoteAverage();
+  Future<MovieDto> getMovieList();
+  Future<MovieDto> getSearchMovieList(String query);
 }
