@@ -20,6 +20,122 @@ class _MovieMainScreenState extends State<MovieMainScreen> {
     super.dispose();
   }
 
+  Widget _movieList() {
+    final viewModel = context.watch<MovieMainViewModel>();
+    return SizedBox(
+      height: 240,
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('이름순'),
+            Expanded(
+              child: GridView.builder(
+                scrollDirection: Axis.horizontal,
+                gridDelegate:
+                const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 1,
+                  childAspectRatio: 3 / 2,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                ),
+                itemCount: viewModel.movieList.length,
+                itemBuilder: (BuildContext ctx, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      final movie = viewModel.movieList[index];
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MovieDetailScreen(movie),
+                        ),
+                      );
+                    },
+                    child: Column(
+                      children: [
+                        Hero(
+                          tag: viewModel.movieList[index].id,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.network(
+                              viewModel.movieList[index].posterPath,
+                              width: 130,
+                              height: 200,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+  Widget _sortedMovieList() {
+    final viewModel = context.watch<MovieMainViewModel>();
+    return SizedBox(
+      height: 240,
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('평점순'),
+            Expanded(
+              child: GridView.builder(
+                scrollDirection: Axis.horizontal,
+                gridDelegate:
+                const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 1,
+                  childAspectRatio: 3 / 2,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                ),
+                itemCount: viewModel.sortedMovieList.length,
+                itemBuilder: (BuildContext ctx, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      final movie = viewModel.sortedMovieList[index];
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MovieDetailScreen(movie),
+                        ),
+                      );
+                    },
+                    child: Column(
+                      children: [
+                        Hero(
+                          tag: viewModel.sortedMovieList[index].id,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.network(
+                              viewModel.sortedMovieList[index].posterPath,
+                              width: 130,
+                              height: 200,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<MovieMainViewModel>();
@@ -27,20 +143,20 @@ class _MovieMainScreenState extends State<MovieMainScreen> {
       appBar: AppBar(
         actions: !_searchBoolean
             ? [
-          IconButton(
-            icon: const Icon(Icons.home),
-            onPressed: () {
-              viewModel.getList();
-            },
-          ),
-          IconButton(
-              icon: const Icon(Icons.search),
-              onPressed: () {
-                setState(() {
-                  _searchBoolean = true;
-                });
-              }),
-        ]
+                IconButton(
+                  icon: const Icon(Icons.home),
+                  onPressed: () {
+                    viewModel.getList();
+                  },
+                ),
+                IconButton(
+                    icon: const Icon(Icons.search),
+                    onPressed: () {
+                      setState(() {
+                        _searchBoolean = true;
+                      });
+                    }),
+              ]
             : [
           IconButton(
               icon: const Icon(Icons.clear),
@@ -48,87 +164,52 @@ class _MovieMainScreenState extends State<MovieMainScreen> {
                 setState(() {
                   _searchBoolean = false;
                   _controller.clear();
-                });
-              })
-        ],
+                      });
+                    })
+              ],
         title: !_searchBoolean
             ? const Text("영화 리스트")
             : TextField(
-          controller: _controller,
-          autofocus: true,
-          cursorColor: Colors.white,
-          decoration: InputDecoration(
-            suffixIcon: GestureDetector(
-              onTap: () {
-                if (_controller.text.isNotEmpty) {
-                  viewModel.getSearchList(_controller.text);
-                  _controller.clear();
-                }
-              },
-              child: const Icon(
-                Icons.search,
-                color: Colors.white,
+                controller: _controller,
+                autofocus: true,
+                cursorColor: Colors.white,
+                decoration: InputDecoration(
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      if (_controller.text.isNotEmpty) {
+                        viewModel.getSearchList(_controller.text);
+                        _controller.clear();
+                      }
+                    },
+                    child: const Icon(
+                      Icons.search,
+                      color: Colors.white,
+                    ),
+                  ),
+                  enabledBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white)),
+                  focusedBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white)),
+                  hintText: '제목을 입력하세요',
+                  hintStyle: const TextStyle(
+                    color: Colors.white60,
+                    fontSize: 20,
+                  ),
+                ),
               ),
-            ),
-            //Style of TextField
-            enabledBorder: const UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.white)),
-            focusedBorder: const UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.white)),
-            hintText:
-            '제목을 입력하세요',
-            hintStyle: const TextStyle(
-              color: Colors.white60,
-              fontSize: 20,
-            ),
-          ),
-        ),
       ),
       body: viewModel.movieList.isEmpty
           ? const CircularProgressIndicator()
-          : Column(
-        children: [
-          Expanded(
-            child: GridView.builder(
-              gridDelegate:
-              const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 200,
-                  childAspectRatio: 2 / 3.6,
-                  crossAxisSpacing: 20,
-                  mainAxisSpacing: 20),
-              itemCount: viewModel.movieList.length,
-              itemBuilder: (BuildContext ctx, index) {
-                return GestureDetector(
-                  onTap: () {
-                    final movie = viewModel.movieList[index];
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MovieDetailScreen(movie),
-                      ),
-                    );
-                  },
-                  child: Column(
-                    children: [
-                      Hero(
-                        tag: viewModel.movieList[index],
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Image.network(
-                            viewModel.movieList[index].posterPath,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      Text(viewModel.movieList[index].title),
-                    ],
-                  ),
-                );
-              },
+          : SingleChildScrollView(
+            child: Column(
+              children: [
+                _movieList(),
+                _sortedMovieList(),
+                _movieList(),
+                _movieList(),
+              ],
             ),
-          ),
-        ],
-      ),
+          )
     );
   }
 }

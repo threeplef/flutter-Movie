@@ -32,4 +32,30 @@ class MovieRepositoryImpl implements MovieRepository {
       },
     ).toList();
   }
+
+  @override
+  Future<List<Movie>> getSortedResultByTitle() async {
+    List<Movie> movieList = await _api.getSortedMovieByTitle();
+    return movieList.where((element) => element.posterPath != null).map(
+          (e) {
+        final Movie temp;
+        String path = 'https://image.tmdb.org/t/p/w500${e.posterPath}';
+        temp = e.copyWith(posterPath: path);
+        return temp;
+      },
+    ).toList()..sort((a, b) => a.originalTitle.compareTo(b.originalTitle));
+  }
+
+  @override
+  Future<List<Movie>> getSortedResultByVoteAverage() async {
+    List<Movie> movieList = await _api.getSortedMovieByVoteAverage();
+    return movieList.where((element) => element.posterPath != null).map(
+          (e) {
+        final Movie temp;
+        String path = 'https://image.tmdb.org/t/p/w500${e.posterPath}';
+        temp = e.copyWith(posterPath: path);
+        return temp;
+      },
+    ).toList()..sort((b, a) => a.voteAverage.compareTo(b.voteAverage));
+  }
 }
