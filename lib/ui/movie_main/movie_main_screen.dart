@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie/ui/components/movie_list.dart';
 import 'package:movie/ui/movie_main/movie_main_view_model.dart';
+import 'package:movie/ui/movie_search/movie_search_screen.dart';
 import 'package:provider/provider.dart';
 
 class MovieMainScreen extends StatefulWidget {
@@ -66,6 +67,10 @@ class _MovieMainScreenState extends State<MovieMainScreen> {
                       if (_controller.text.isNotEmpty) {
                         viewModel.getSearchList(_controller.text);
                         _controller.clear();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const MovieSearchScreen()),
+                        );
                       }
                     },
                     child: const Icon(

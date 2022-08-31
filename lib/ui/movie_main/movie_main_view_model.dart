@@ -6,6 +6,7 @@ import 'package:movie/data/source/movie_api_impl.dart';
 class MovieMainViewModel extends ChangeNotifier {
   final _movieRepository = MovieRepositoryImpl(MovieApiImpl());
   List<Movie> movieList = [];
+  List<Movie> movieSearchList = [];
   List<Movie> sortedMovieListByTitle = [];
   List<Movie> sortedMovieListByVoteAverage = [];
   List<Movie> sortedMovieByReleaseDate = [];
@@ -24,7 +25,7 @@ class MovieMainViewModel extends ChangeNotifier {
   }
 
   Future getSearchList(String query) async {
-    movieList = await _movieRepository.getSearchResult(query);
+    movieSearchList = await _movieRepository.getSearchResult(query);
     notifyListeners();
   }
 
