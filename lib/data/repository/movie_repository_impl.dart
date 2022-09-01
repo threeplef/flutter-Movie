@@ -22,7 +22,7 @@ class MovieRepositoryImpl implements MovieRepository {
       return Movie(
         id: e.id ?? 0,
         adult: e.adult ?? false,
-        backdropPath: e.backdropPath ?? 'http://',
+        backdropPath: 'https://image.tmdb.org/t/p/w500${e.backdropPath}',
         originalTitle: e.originalTitle ?? '',
         overview: e.overview ?? '',
         popularity: e.popularity ?? 0,
@@ -49,7 +49,7 @@ class MovieRepositoryImpl implements MovieRepository {
         return Movie(
           id: e.id ?? 0,
           adult: e.adult ?? false,
-          backdropPath: e.backdropPath ?? 'http://',
+          backdropPath: 'https://image.tmdb.org/t/p/w500${e.backdropPath}',
           originalTitle: e.originalTitle ?? '',
           overview: e.overview ?? '',
           popularity: e.popularity ?? 0,

@@ -12,7 +12,6 @@ class MovieMainScreen extends StatefulWidget {
 }
 
 class _MovieMainScreenState extends State<MovieMainScreen> {
-  bool _searchBoolean = false;
   final _controller = TextEditingController();
 
   @override
@@ -27,19 +26,18 @@ class _MovieMainScreenState extends State<MovieMainScreen> {
     return Scaffold(
       appBar: AppBar(
             backgroundColor: Colors.black,
-            actions: !_searchBoolean
-                ? [
-                    IconButton(
-                      icon: const Icon(Icons.home, size: 30),
-                      onPressed: () {
-                        viewModel.getList();
-                        viewModel.getSortedListByTitle();
-                        viewModel.getSortedListByVoteAverage();
-                        viewModel.getSortedListByReleaseDate();
-                      },
-                    ),
-                    IconButton(
-                        icon: const Icon(Icons.search, size: 30),
+            actions: [
+            IconButton(
+              icon: const Icon(Icons.home, size: 30),
+              onPressed: () {
+                viewModel.getList();
+                viewModel.getSortedListByTitle();
+                viewModel.getSortedListByVoteAverage();
+                viewModel.getSortedListByReleaseDate();
+              },
+            ),
+            IconButton(
+                icon: const Icon(Icons.search, size: 30),
                         onPressed: () {
                           Navigator.push(
                             context,
@@ -49,43 +47,34 @@ class _MovieMainScreenState extends State<MovieMainScreen> {
                           );
                         }),
                     const SizedBox(width: 5),
-                  ]
-                : [
-                    IconButton(
-                        icon: const Icon(Icons.clear),
-                        onPressed: () {
-                          setState(() {
-                            _searchBoolean = false;
-                            _controller.clear();
-                          });
-                        })
                   ],
-            title: Image.asset('assets/images/logo.png', width: 40)),
+          title: Image.asset('assets/images/logo.png', width: 40)),
         body: viewModel.movieList.isEmpty ||
                 viewModel.sortedMovieListByTitle.isEmpty ||
                 viewModel.sortedMovieListByVoteAverage.isEmpty ||
                 viewModel.sortedMovieByReleaseDate.isEmpty
             ? const CircularProgressIndicator()
-            : Container(
-                color: Colors.black,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      MovieList(
-                          movieList: viewModel.movieList,
-                          filterTitle: '상영 중인 영화'),
-                      MovieList(
-                          movieList: viewModel.sortedMovieListByVoteAverage,
-                          filterTitle: '평점순'),
-                      MovieList(
-                          movieList: viewModel.sortedMovieListByTitle,
-                          filterTitle: '이름순'),
-                      MovieList(
-                          movieList: viewModel.sortedMovieByReleaseDate,
-                          filterTitle: '최신순'),
-                    ],
-                  ),
+          : Container(
+              color: Colors.black,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    MovieList(
+                        movieList: viewModel.movieList,
+                        filterTitle: '상영 중인 영화'),
+                    MovieList(
+                        movieList: viewModel.sortedMovieListByVoteAverage,
+                        filterTitle: '평점순'),
+                    MovieList(
+                        movieList: viewModel.sortedMovieListByTitle,
+                        filterTitle: '이름순'),
+                    MovieList(
+                        movieList: viewModel.sortedMovieByReleaseDate,
+                        filterTitle: '최신순'),
+                  ],
                 ),
-              ));
+              ),
+            ),
+    );
   }
 }
