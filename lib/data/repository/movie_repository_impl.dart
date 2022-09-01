@@ -17,7 +17,7 @@ class MovieRepositoryImpl implements MovieRepository {
     }
 
     final filteredList = movieDto.results!
-        .where((element) => element.posterPath != null)
+        .where((element) => element.posterPath != null && element.backdropPath != null)
         .map((e) {
       return Movie(
         id: e.id ?? 0,
@@ -44,7 +44,7 @@ class MovieRepositoryImpl implements MovieRepository {
       return [];
     }
 
-    return movieDto.results!.where((element) => element.posterPath != null).map(
+    return movieDto.results!.where((element) => element.posterPath != null && element.backdropPath != null).map(
       (e) {
         return Movie(
           id: e.id ?? 0,

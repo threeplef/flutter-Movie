@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movie/debounce.dart';
 import 'package:movie/ui/components/movie_list.dart';
 import 'package:movie/ui/movie_detail/movie_detail_screen.dart';
-import 'package:movie/ui/movie_main/movie_main_view_model.dart';
+import 'package:movie/ui/movie_main/movie_view_model.dart';
 import 'package:provider/provider.dart';
 
 class MovieSearchScreen extends StatefulWidget {
@@ -24,7 +24,7 @@ class _MovieSearchScreenState extends State<MovieSearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.watch<MovieMainViewModel>();
+    final viewModel = context.watch<MovieViewModel>();
 
     return Scaffold(
       appBar: AppBar(

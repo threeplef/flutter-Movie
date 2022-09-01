@@ -3,7 +3,7 @@ import 'package:movie/data/model/movie.dart';
 import 'package:movie/data/repository/movie_repository_impl.dart';
 import 'package:movie/data/source/movie_api_impl.dart';
 
-class MovieMainViewModel extends ChangeNotifier {
+class MovieViewModel extends ChangeNotifier {
   final _movieRepository = MovieRepositoryImpl(MovieApiImpl());
   List<Movie> movieList = [];
   List<Movie> movieSearchList = [];
@@ -11,7 +11,7 @@ class MovieMainViewModel extends ChangeNotifier {
   List<Movie> sortedMovieListByVoteAverage = [];
   List<Movie> sortedMovieByReleaseDate = [];
 
-  MovieMainViewModel() {
+  MovieViewModel() {
     getList();
     getSortedListByTitle();
     getSortedListByVoteAverage();
