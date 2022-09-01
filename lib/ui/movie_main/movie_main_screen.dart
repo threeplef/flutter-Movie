@@ -26,86 +26,66 @@ class _MovieMainScreenState extends State<MovieMainScreen> {
     final viewModel = context.watch<MovieMainViewModel>();
     return Scaffold(
       appBar: AppBar(
-        actions: !_searchBoolean
-            ? [
-                IconButton(
-                  icon: const Icon(Icons.home),
-                  onPressed: () {
-                    viewModel.getList();
-                    viewModel.getSortedListByTitle();
-                    viewModel.getSortedListByVoteAverage();
-                    viewModel.getSortedListByReleaseDate();
-                  },
-                ),
-                IconButton(
-                    icon: const Icon(Icons.search),
-                    onPressed: () {
-                      setState(() {
-                        _searchBoolean = true;
-                      });
-                    }),
-              ]
-            : [
-          IconButton(
-              icon: const Icon(Icons.clear),
-              onPressed: () {
-                setState(() {
-                  _searchBoolean = false;
-                  _controller.clear();
-                      });
-                    })
-              ],
-        title: !_searchBoolean
-            ? const Text("영화 리스트")
-            : TextField(
-                controller: _controller,
-                autofocus: true,
-                cursorColor: Colors.white,
-                decoration: InputDecoration(
-                  suffixIcon: GestureDetector(
-                    onTap: () {
-                      if (_controller.text.isNotEmpty) {
-                        viewModel.getSearchList(_controller.text);
-                        _controller.clear();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const MovieSearchScreen()),
-                        );
-                      }
-                    },
-                    child: const Icon(
-                      Icons.search,
-                      color: Colors.white,
+            backgroundColor: Colors.black,
+            actions: !_searchBoolean
+                ? [
+                    IconButton(
+                      icon: const Icon(Icons.home, size: 30),
+                      onPressed: () {
+                        viewModel.getList();
+                        viewModel.getSortedListByTitle();
+                        viewModel.getSortedListByVoteAverage();
+                        viewModel.getSortedListByReleaseDate();
+                      },
                     ),
-                  ),
-                  enabledBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white)),
-                  focusedBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white)),
-                  hintText: '제목을 입력하세요',
-                  hintStyle: const TextStyle(
-                    color: Colors.white60,
-                    fontSize: 20,
-                  ),
-                ),
-              ),
-      ),
+                    IconButton(
+                        icon: const Icon(Icons.search, size: 30),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const MovieSearchScreen()),
+                          );
+                        }),
+                    const SizedBox(width: 5),
+                  ]
+                : [
+                    IconButton(
+                        icon: const Icon(Icons.clear),
+                        onPressed: () {
+                          setState(() {
+                            _searchBoolean = false;
+                            _controller.clear();
+                          });
+                        })
+                  ],
+            title: Image.asset('assets/images/logo.png', width: 40)),
         body: viewModel.movieList.isEmpty ||
                 viewModel.sortedMovieListByTitle.isEmpty ||
                 viewModel.sortedMovieListByVoteAverage.isEmpty ||
                 viewModel.sortedMovieByReleaseDate.isEmpty
             ? const CircularProgressIndicator()
-            : SingleChildScrollView(
-                child: Column(
-                  children: [
-                    MovieList(movieList: viewModel.movieList, filterTitle: '상영 중인 영화'),
-                    MovieList(
-                        movieList: viewModel.sortedMovieListByVoteAverage,filterTitle: '평점순'),
-                    MovieList(movieList: viewModel.sortedMovieListByTitle,filterTitle: '이름순'),
-                    MovieList(movieList: viewModel.sortedMovieByReleaseDate,filterTitle: '최신순'),
-                  ],
+            : Container(
+                color: Colors.black,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      MovieList(
+                          movieList: viewModel.movieList,
+                          filterTitle: '상영 중인 영화'),
+                      MovieList(
+                          movieList: viewModel.sortedMovieListByVoteAverage,
+                          filterTitle: '평점순'),
+                      MovieList(
+                          movieList: viewModel.sortedMovieListByTitle,
+                          filterTitle: '이름순'),
+                      MovieList(
+                          movieList: viewModel.sortedMovieByReleaseDate,
+                          filterTitle: '최신순'),
+                    ],
+                  ),
                 ),
-              )
-    );
+              ));
   }
 }

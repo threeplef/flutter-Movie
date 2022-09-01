@@ -16,12 +16,20 @@ class MovieList extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(filterTitle),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 5.0),
+              child: Text(
+                filterTitle,
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16),
+              ),
+            ),
             Expanded(
               child: GridView.builder(
                 scrollDirection: Axis.horizontal,
-                gridDelegate:
-                const SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 1,
                   childAspectRatio: 3 / 2,
                   crossAxisSpacing: 10,
@@ -40,7 +48,7 @@ class MovieList extends StatelessWidget {
                       );
                     },
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(5),
                       child: Image.network(
                         movieList[index].posterPath,
                         width: 130,
