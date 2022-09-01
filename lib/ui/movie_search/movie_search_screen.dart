@@ -19,6 +19,7 @@ class _MovieSearchScreenState extends State<MovieSearchScreen> {
   @override
   void dispose() {
     _controller.dispose();
+    _debounce.dispose();
     super.dispose();
   }
 
