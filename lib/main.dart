@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:movie/ui/movie_main/movie_main_screen.dart';
 import 'package:movie/ui/movie_main/movie_view_model.dart';
+import 'package:movie/ui/movie_splash/movie_splash_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const MovieMainScreen(),
+        home: const MovieSplashScreen(),
       ),
     );
   }

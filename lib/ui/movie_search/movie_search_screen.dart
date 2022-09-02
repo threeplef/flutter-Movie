@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:movie/debounce.dart';
-import 'package:movie/ui/components/movie_list.dart';
 import 'package:movie/ui/movie_detail/movie_detail_screen.dart';
 import 'package:movie/ui/movie_main/movie_view_model.dart';
 import 'package:provider/provider.dart';

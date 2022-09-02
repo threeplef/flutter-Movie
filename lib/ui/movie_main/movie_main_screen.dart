@@ -25,8 +25,9 @@ class _MovieMainScreenState extends State<MovieMainScreen> {
     final viewModel = context.watch<MovieViewModel>();
     return Scaffold(
       appBar: AppBar(
-            backgroundColor: Colors.black,
-            actions: [
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.black,
+          actions: [
             IconButton(
               icon: const Icon(Icons.home, size: 30),
               onPressed: () {
@@ -38,22 +39,26 @@ class _MovieMainScreenState extends State<MovieMainScreen> {
             ),
             IconButton(
                 icon: const Icon(Icons.search, size: 30),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const MovieSearchScreen()),
-                          );
-                        }),
-                    const SizedBox(width: 5),
-                  ],
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const MovieSearchScreen()),
+                  );
+                }),
+            const SizedBox(width: 5),
+          ],
           title: Image.asset('assets/images/logo.png', width: 40)),
         body: viewModel.movieList.isEmpty ||
-                viewModel.sortedMovieListByTitle.isEmpty ||
-                viewModel.sortedMovieListByVoteAverage.isEmpty ||
-                viewModel.sortedMovieByReleaseDate.isEmpty
-            ? const CircularProgressIndicator()
+              viewModel.sortedMovieListByTitle.isEmpty ||
+              viewModel.sortedMovieListByVoteAverage.isEmpty ||
+              viewModel.sortedMovieByReleaseDate.isEmpty
+          ? Container(
+              color: Colors.black,
+              child: const Center(
+                child: CircularProgressIndicator(color: Colors.red),
+              ),
+            )
           : Container(
               color: Colors.black,
               child: SingleChildScrollView(
