@@ -64,26 +64,9 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    Stack(
-                      children: [
-                        Image.network(
-                          widget.movie.backdropPath,
-                          fit: BoxFit.cover,
-                        ),
-                        Positioned(
-                          top: 10,
-                          right: 10,
-                          child: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                !fadeOutController;
-                              });
-                              Navigator.pop(context);
-                            },
-                            icon: const Icon(Icons.close),
-                          ),
-                        ),
-                      ],
+                    Image.network(
+                      widget.movie.backdropPath,
+                      fit: BoxFit.cover,
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
