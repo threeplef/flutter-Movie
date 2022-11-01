@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie/debounce.dart';
+import 'package:movie/ui/main_action.dart';
 import 'package:movie/ui/movie_detail/movie_detail_screen.dart';
 import 'package:movie/ui/movie_main/movie_view_model.dart';
 import 'package:provider/provider.dart';
@@ -35,10 +36,9 @@ class _MovieSearchScreenState extends State<MovieSearchScreen> {
           child: TextField(
             style: const TextStyle(color: Colors.white),
             controller: _controller,
-            // autofocus: true,
             cursorColor: Colors.white,
             onChanged: _debounce.run(() => setState(() {
-                  viewModel.getSearchList(_controller.text);
+                  viewModel.onAction(MainAction.getSearchMovieList(_controller.text));
                 })),
             decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(

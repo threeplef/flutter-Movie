@@ -104,7 +104,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
                           child: ElevatedButton(
                               onPressed: () {},
                               style: ElevatedButton.styleFrom(
-                                primary: Colors.white,
+                                backgroundColor: Colors.white,
                               ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -124,7 +124,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
                           child: ElevatedButton(
                               onPressed: () {},
                               style: ElevatedButton.styleFrom(
-                                primary: Colors.white12,
+                                backgroundColor: Colors.white12,
                               ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,

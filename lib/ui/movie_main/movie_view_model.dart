@@ -4,10 +4,13 @@ import 'package:movie/data/repository/movie_repository_impl.dart';
 import 'package:movie/data/source/movie_api_impl.dart';
 import 'package:movie/ui/main_state.dart';
 
+import '../main_action.dart';
+
 class MovieViewModel extends ChangeNotifier {
   final _movieRepository = MovieRepositoryImpl(MovieApiImpl());
 
   final MainState _state = const MainState();
+
   MainState get state => _state;
 
   List<Movie> movieList = [];
@@ -22,6 +25,23 @@ class MovieViewModel extends ChangeNotifier {
     getSortedListByVoteAverage();
     getSortedListByReleaseDate();
     notifyListeners();
+  }
+
+  void onAction(MainAction action) {
+    action.when(
+      getMovieList: () {
+        getList();
+      },
+      getSearchMovieList: (String query) {
+        getSearchList(query);
+      },
+      home: () {
+        getList();
+        getSortedListByTitle();
+        getSortedListByVoteAverage();
+        getSortedListByReleaseDate();
+      },
+    );
   }
 
   Future getList() async {
